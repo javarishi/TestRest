@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.learn.web.bo.ActorBO;
 import com.learn.web.dto.ActorDTO;
+import com.learn.web.exception.TestRestException;
 
 /**
  * Servlet implementation class ActorServlet
@@ -20,8 +23,11 @@ public class ActorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ActorBO actorBO = null;
 	
+	private static Logger logger = Logger.getLogger(ActorServlet.class);
+	
 	@Override
 	public void init() throws ServletException {
+		logger.debug("ActorServlet is Initialized");
 		actorBO = new ActorBO();
 	}
     /**
@@ -36,23 +42,31 @@ public class ActorServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// check request
+		logger.debug("ActorServlet doGet is called");
 		String actorId =  request.getParameter("actorId");
+		logger.debug("ActorServlet actorId Paramener Value :: "  + actorId);
+		
 		int intActorId = 0;
 		ActorDTO actor = null;
 		PrintWriter writer = response.getWriter();
+		response.setContentType("text/HTML");
 		if(actorId != null && actorId.length() > 0){
 			try{
 				intActorId = Integer.parseInt(actorId.trim());
 				actor = actorBO.executeGetActorDetails(intActorId);
 				if(actor != null){
-					writer.append("<Actor> ");
-					writer.append("<FirstName>" + actor.getFirstName() + "</FirstName>");
-					writer.append("<LastName>" + actor.getLastName() + "</LastName>");
-					writer.append("</Actor> ");
+					writer.println("<Actor> ");
+					writer.println("<FirstName>" + actor.getFirstName() + "</FirstName>");
+					writer.println("<LastName>" + actor.getLastName() + "</LastName>");
+					writer.println("</Actor> ");
 				}
-			}catch(Exception e){
-				e.printStackTrace();
-				writer.append("Exception in ActorServlet " + e.getMessage());
+			}catch(TestRestException exe){
+				logger.error("TestRestException in ActorServlet : " + exe.getMessage(), exe);
+				writer.println("TestRestException in ActorServlet " + exe.getMessage());
+			}
+			catch(Exception e){
+				logger.error("Exception in ActorServlet : " + e.getMessage(), e);;
+				//writer.println("Exception in ActorServlet " + e.getMessage());
 			}
 			response.flushBuffer();
 		}
