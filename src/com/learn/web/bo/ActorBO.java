@@ -15,11 +15,12 @@ public class ActorBO {
 		actorDAO = new ActorDAO();
 	}
 	
-	public ActorDTO executeGetActorDetails(int actorId) 
+	public ActorDTO executeGetActorDetails(String actorId) 
 			throws TestRestException{
 		ActorDTO actor = null;
 		try{
-			actor = actorDAO.fetchActorDetails(actorId);
+			int validActorId = Integer.parseInt(actorId);
+			actor = actorDAO.fetchActorDetails(validActorId);
 			if(actor == null){
 				actor = new ActorDTO();
 			}

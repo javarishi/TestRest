@@ -52,8 +52,7 @@ public class ActorServlet extends HttpServlet {
 		response.setContentType("text/HTML");
 		if(actorId != null && actorId.length() > 0){
 			try{
-				intActorId = Integer.parseInt(actorId.trim());
-				actor = actorBO.executeGetActorDetails(intActorId);
+				actor = actorBO.executeGetActorDetails(actorId.trim());
 				if(actor != null){
 					writer.println("<Actor> ");
 					writer.println("<FirstName>" + actor.getFirstName() + "</FirstName>");

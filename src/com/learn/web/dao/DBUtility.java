@@ -11,7 +11,7 @@ public class DBUtility {
 	public static Connection getConnection() throws Exception {
 		Connection conn = null;
 		try{
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			Properties prop = new Properties();
 			prop.put("user", "root");
 			prop.put("password", "password");

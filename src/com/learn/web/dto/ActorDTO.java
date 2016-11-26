@@ -2,15 +2,21 @@ package com.learn.web.dto;
 
 import java.sql.Timestamp;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+@XStreamAlias("Actor")
 public class ActorDTO {
 	
 	public ActorDTO() {
 		// TODO Auto-generated constructor stub
 	}
-	
+	@XStreamAlias("ActorId")
 	private int actorId;
+	@XStreamAlias("FirstName")
 	private String firstName;
+	@XStreamAlias("LastName")
 	private String lastName;
+	@XStreamAlias("LastUpdate")
 	private Timestamp lastUpdate;
 	/**
 	 * @return the actorId
