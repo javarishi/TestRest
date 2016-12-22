@@ -8,7 +8,7 @@ import com.learn.web.dto.ActorDTO;
 
 public class ActorDAO {
 	
-	String fetchActorWithActorId = ""
+	private final String fetchActorWithActorId = ""
 			+ "SELECT `actor`.`actor_id`, "
 			+ "    `actor`.`first_name`, "
 			+ "    `actor`.`last_name`, "
@@ -17,7 +17,10 @@ public class ActorDAO {
 			+ "WHERE `actor`.`actor_id` = ?;";
 
 	public ActorDAO() {
-		
+		String check = null;
+		if(check.length() > 0){
+			System.out.println("I am a Bug");
+		}
 	}
 
 	
